@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d0d0f" />
+  <title>PitStop COHAB • PIX</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="watermark" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/pitstop-logo.png" alt="PitStop COHAB" />
+      <div>
+        <h1>GERADOR DE QR CODE PIX</h1>
+        <p>Crie, salve e acompanhe seus pagamentos</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button id="settingsBtn" class="icon-btn" title="Configurações" aria-label="Configurações">⚙</button>
+      <button id="newPaymentBtn" class="btn btn-outline">＋ Novo pagamento</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card generator-card">
+      <div class="card-title"><span class="gold-dot">$</span><h2>NOVO PAGAMENTO</h2></div>
+
+      <label for="amount">VALOR (R$)</label>
+      <div class="amount-box">
+        <span>R$</span>
+        <input id="amount" inputmode="decimal" autocomplete="off" placeholder="0,00" aria-label="Valor do PIX" />
+      </div>
+
+      <div class="presets">
+        <button data-value="10">R$ 10</button>
+        <button data-value="20">R$ 20</button>
+        <button data-value="50">R$ 50</button>
+        <button data-value="100">R$ 100</button>
+      </div>
+
+      <div class="qr-area" id="qrArea">
+        <div class="qr-heading"><span>▦</span> QR CODE PIX</div>
+        <div class="qr-shell"><div id="qrcode"></div></div>
+        <div id="emptyQr" class="empty-qr">Digite um valor para gerar o PIX</div>
+      </div>
+
+      <label for="pixPayload">PIX COPIA E COLA</label>
+      <div class="copy-row">
+        <input id="pixPayload" readonly placeholder="O código PIX aparecerá aqui" />
+        <button id="copyBtn" class="square-btn" title="Copiar PIX">⧉</button>
+      </div>
+
+      <div class="details">
+        <div><span>CHAVE PIX (CNPJ)</span><strong>64.712.625/0001-69</strong></div>
+        <div><span>TITULAR</span><strong id="receiverNameView">Configure o titular</strong></div>
+        <div><span>CIDADE</span><strong id="receiverCityView">Configure a cidade</strong></div>
+      </div>
+
+      <div class="bottom-actions">
+        <button id="saveBtn" class="btn btn-gold">✓ Salvar pagamento</button>
+        <button id="clearBtn" class="btn btn-dark">Limpar</button>
+      </div>
+      <p class="hint">O histórico fica salvo neste aparelho/navegador.</p>
+    </section>
+
+    <section class="card history-card">
+      <div class="card-title"><span class="gold-dot">☷</span><h2>HISTÓRICO DE PAGAMENTOS</h2></div>
+      <div class="search-row">
+        <input id="search" placeholder="Buscar por valor, ID ou status..." />
+        <button id="exportBtn" class="square-btn" title="Exportar CSV">⇩</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+      <div id="historyEmpty" class="history-empty">Nenhum pagamento salvo ainda.</div>
+    </section>
+  </main>
+
+  <footer>🔒 Seus dados ficam salvos somente neste dispositivo</footer>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" id="settingsForm" class="settings-form">
+      <div class="dialog-head">
+        <div><h3>Configuração do recebedor</h3><p>Necessário para montar um QR PIX válido.</p></div>
+        <button value="cancel" class="close-btn" aria-label="Fechar">×</button>
+      </div>
+      <label>Nome do titular / recebedor
+        <input id="receiverName" maxlength="25" placeholder="Ex.: PIT STOP COHAB" required />
+      </label>
+      <label>Cidade
+        <input id="receiverCity" maxlength="15" placeholder="Ex.: CAMPO GRANDE" required />
+      </label>
+      <p class="dialog-note">A chave PIX CNPJ está fixa em <strong>64.712.625/0001-69</strong>.</p>
+      <menu>
+        <button value="cancel" class="btn btn-dark">Cancelar</button>
+        <button id="saveSettings" value="default" class="btn btn-gold">Salvar</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
